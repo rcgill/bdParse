@@ -2,42 +2,29 @@
    "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>bdParse Test Harness</title>
+    <title>bdParse Smoke Test</title>
+    <script data-dojo-config="async:1" src="../../dtk/dojo/dojo.js"></script>
     <script>
-      var require= {
-        baseUrl: "./",
-        urlMap: [
-          function(name) {
-            if (name=="./text.js") {
-              return "../../dojo-v2x/lib/plugins/text.js";
-            }
-            return 0;
-          }
-        ],
-        packages: [{
-          name:"bd",
-          location:"../../backdraft"
-        },{
-          name:"bdParse",
-          location:"..",
-          urlMap:[
-            [/\/lib\/test\//, "/test/"]
-          ]
-        },{
-          name:"dijit",
-          location:"../../dijit-v2x"
-        },{
-          name:"dojo",
-          location:"../../dojo-v2x"
-        }],
-        main:"bdParse/test/driver",
-      };
+		require({
+		  packages:[{
+		    name:"bdParse",
+			location:"../../bdParse/lib"
+	      },{
+		    name:"bdParseTest",
+			location:"../../bdParse/test"
+		  }]
+		});
+		require(["dojo", "bdParse", "dojo/text!bdParseTest/smoke.js", "bdParse/dumpSause", "dojo/domReady"], function(dojo, parse, smoke, sause){
+			try{
+				parse.parseText(smoke)[1].traverse(sause.sause);
+				dojo.byId("result").innerHTML= "<pre>" + sause.getOutput()  + "</pre>";
+			} catch(e) {
+			    console.log(e);
+			}
+		});
     </script>
-    <script src="../../bdLoad/lib/require.js"></script>
   </head>
   <body class="tundra">
-    <h1>Status</h1>
-    <p id="status">todo</p>
     <h1>Result</h1>
     <p id="result"></p>
   </body>
