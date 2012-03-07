@@ -1,3 +1,7 @@
+function quickTest(){
+	var x= someObj["some-prop"];
+}
+
 function labelNodeTest(){
 	while(1){
 		if(someCondition){
